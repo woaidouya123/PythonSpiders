@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>武林外传</title>
+    <meta charset="utf-8">
+</head>
+
+<body>
+    <div id="content">
+        <embed id="flashgame1" name="flashgame" src="1.swf" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" width="750" height="563" allowscriptaccess="always" allownetworking="internal" style="width: 1005px; height: 755px;">
+    </div>
+    <script>
+        document.getElementById("content").addEventListener('mouseup', function(event) {
+            var ev = event || window.event;
+            console.log(ev.screenX, ev.screenY, "up")
+        }, true)
+    </script>
+</body>
+
+</html>
