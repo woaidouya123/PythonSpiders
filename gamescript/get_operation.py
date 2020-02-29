@@ -10,6 +10,7 @@ import time
 hm = PyHook3.HookManager()
 saved_op = []
 begin_time = None
+is_recording = False
 
 # 监听到鼠标事件调用
 def onMouseEvent(event):
@@ -31,10 +32,11 @@ def onKeyboardEvent(event):
     global begin_time
     ctrl_pressed = GetKeyState(HookConstants.VKeyToID('VK_CONTROL'))
     if(ctrl_pressed and event.Key == 'P'):
+        global is_recording
+        is_recording = False
         hm.UnhookKeyboard()
         hm.UnhookMouse()
         win32api.PostQuitMessage()
-        print(saved_op)
     cur_time = time.time()
     saved_op.append({
         'type':'wait',
@@ -50,8 +52,17 @@ def onKeyboardEvent(event):
 def getRecord():
     return saved_op
 
+def stop():
+    global is_recording
+    is_recording = False
+    hm.UnhookKeyboard()
+    hm.UnhookMouse()
+    win32api.PostQuitMessage()
+
 def start():
-    global begin_time
+    global begin_time,is_recording
+    is_recording = True
+    saved_op = []
     delay = 3
     # 监听键盘
     hm.KeyDown = onKeyboardEvent
@@ -59,8 +70,7 @@ def start():
     # 监听鼠标 
     hm.MouseLeftUp = onMouseEvent
     hm.HookMouse()
-    print("{}秒后开始记录键鼠操作，ctrl+p 结束记录".format(delay))
-    time.sleep(delay)
+    
     # 循环监听
     begin_time = time.time()
     pythoncom.PumpMessages()
