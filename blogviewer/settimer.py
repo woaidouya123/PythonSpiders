@@ -47,6 +47,6 @@ if __name__ == '__main__':
 #     schedule.every(30).seconds.do(job2)
 #     schedule.every(1).minutes.do(job3)
 #     schedule.every().day.at('17:49').do(job4)
-    schedule.every(1).minutes.do(job1)
+    schedule.every(5).to(7).minutes.do(job1)
     while True:
         schedule.run_pending()
